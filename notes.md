@@ -37,3 +37,34 @@ from .models import Avengers
 
 admin.site.register(Avengers)
 ```
+
+## Templates 
+
+1. create a __templates__ directory in endgame directory
+2. Your project’s TEMPLATES setting describes how Django will load and render templates.
+3. The default settings file configures a __DjangoTemplates__ backend 
+whose __APP_DIRS__ option is set to True. 
+4. By convention DjangoTemplates looks for a “templates” subdirectory in each of the INSTALLED_APPS.
+5. need to import __from django.template import loader__
+> You need to create "templates" directory in apps directory with its name as sub-directory.
+in our project "endgame" is app so we create a "templates" directory and then we create 
+> sub-directory "endgame" and save a index.html (endgame/templates/endgame/index.html)
+```python
+from django.template import loader
+from django.http import HttpResponse
+
+def temp_view(request):
+    temp = loader.get_template("endgame/index.html")
+    ctx = {'name': 'akhil'} # context object
+    return HttpResponse(temp.render(ctx, request))
+```
+A shortcut: render()¶
+It’s a very common idiom to load a template, fill a context and return an HttpResponse object with the result of the rendered template. 
+Django provides a shortcut. Here’s the full index() view, rewritten:
+```python
+from django.shortcuts import render
+
+def temp_view_advance(request):
+    return render(request,'endgame/index.html',{})
+```
+
